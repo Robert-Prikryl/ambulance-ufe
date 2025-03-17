@@ -1,5 +1,5 @@
 import { Component, Event, EventEmitter, Host, Prop, State, h } from '@stencil/core';
-import { AmbulanceWaitingListApi, WaitingListEntry, Configuration } from '../../api/ambulance-wl';
+import { AmbulanceWaitingListApi, Configuration } from '../../api/ambulance-wl';
 
 @Component({
   tag: 'rp-ambulance-wl-list',
@@ -45,8 +45,8 @@ export class RpAmbulanceWlList {
           ? <div class="error">{this.errorMessage}</div>
           :
         <md-list>
-          {this.waitingPatients.map(patient =>
-            <md-list-item onClick={ () => this.entryClicked.emit(patient.id)} >
+           {this.waitingPatients.map((patient) =>
+              <md-list-item onClick={ () => this.entryClicked.emit(patient.id)}>
               <div slot="headline">{patient.name}</div>
               <div slot="supporting-text">{"Predpokladaný vstup: " + patient.estimatedStart?.toLocaleString()}</div>
               <md-icon slot="start">person</md-icon>
@@ -54,6 +54,10 @@ export class RpAmbulanceWlList {
           )}
         </md-list>
         }
+        <md-filled-icon-button class="add-button"
+          onclick={() => this.entryClicked.emit("@new")}>
+          <md-icon>add</md-icon>
+        </md-filled-icon-button>
       </Host>
     );
   }
